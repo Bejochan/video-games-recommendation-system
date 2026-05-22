@@ -1,0 +1,156 @@
+# =============================================================================
+#  .gitignore — Video Game Marketplace Project
+#  Tech stack : Flask (Python 3.9+), React + Vite (Node.js), scikit-learn,
+#               pandas, pytest, python-dotenv, RAWG API, Steam Store API
+# =============================================================================
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. PYTHON / BACKEND
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Virtual environment – sangat besar, bisa di-recreate via `python -m venv venv`
+backend/venv/
+
+# Bytecode Python yang di-generate otomatis saat program dijalankan
+# Ditangkap secara global agar subdirektori lain (tests/, scripts/) juga tercakup
+**/__pycache__/
+**/*.py[cod]
+
+# File environment – berisi API Key RAWG & Steam, JANGAN pernah di-commit
+.env
+backend/.env
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. FLASK-SPECIFIC
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Folder instance Flask: menyimpan SQLite dev DB, konfigurasi lokal,
+# dan file upload sementara yang bersifat per-mesin
+instance/
+backend/instance/
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. TESTING (pytest + pytest-cov)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Cache pytest – di-generate saat `pytest` dijalankan, tidak perlu di-track
+.pytest_cache/
+backend/.pytest_cache/
+
+# Laporan code coverage dari pytest-cov
+# .coverage   = file biner hasil pengukuran
+# htmlcov/    = laporan HTML yang bisa dibuka di browser
+# coverage.xml = laporan XML untuk integrasi CI/CD (Codecov, GitHub Actions)
+.coverage
+htmlcov/
+backend/htmlcov/
+coverage.xml
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. MACHINE LEARNING MODELS (scikit-learn)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Model terlatih (TF-IDF vectorizer, cosine similarity matrix, dll.)
+# File ini bisa sangat besar (ratusan MB) dan harus disimpan di model registry
+# seperti DVC, MLflow, atau cloud storage – bukan di Git
+*.pkl
+*.joblib
+backend/models/
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. JUPYTER NOTEBOOKS (eksplorasi data)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Notebook Jupyter yang mungkin dipakai untuk analisis awal data game
+# Checkpoint otomatis yang dibuat oleh Jupyter saat menyimpan notebook
+*.ipynb
+.ipynb_checkpoints/
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 6. DATA FILES (CSV & JSON)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Dataset game 10.000+ baris hasil scraping RAWG/Steam – membuat repo sangat berat
+# Hasil batch rekomendasi yang di-generate secara periodik
+backend/data/*.csv
+backend/data/*.json
+
+# PENGECUALIAN: biarkan file .gitkeep agar folder backend/data/ tetap ter-track
+# sehingga struktur direktori tetap ada saat clone pertama kali
+!backend/data/.gitkeep
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 7. NODE.JS / FRONTEND (React + Vite)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Dependensi Node – diinstall ulang via `npm install` (bisa > 200 MB)
+frontend/node_modules/
+
+# Hasil build Vite (folder utama production build)
+frontend/dist/
+
+# Folder build alternatif (jika proyek di-migrate ke CRA/Next.js)
+frontend/build/
+
+# Cache internal Vite & Rollup – mempercepat build lokal, tidak perlu di-commit
+frontend/.cache/
+
+# Laporan coverage frontend (Vitest atau Jest)
+frontend/coverage/
+
+# File environment frontend:
+# .env          = variabel dasar (VITE_API_URL, dll.)
+# .env.local    = override lokal yang tidak di-share
+# *.local       = tangkap semua varian .env.*.local sekaligus
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/*.local
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 8. OS / IDE
+# ─────────────────────────────────────────────────────────────────────────────
+
+# macOS: metadata folder yang dibuat Finder (tidak relevan di Linux/Windows)
+.DS_Store
+**/.DS_Store
+
+# Windows: cache thumbnail Explorer & metadata folder
+Thumbs.db
+desktop.ini
+
+# VSCode: konfigurasi editor yang mungkin berisi path absolut lokal
+# Catatan: boleh di-track jika tim sepakat berbagi settings (launch.json, dll.)
+.vscode/
+
+# JetBrains IDEs: PyCharm, WebStorm, IntelliJ
+.idea/
+
+# Vim: file swap sementara yang dibuat saat mengedit file
+*.swp
+*.swo
+
+# File backup dari merge conflict Git
+*.orig
+
+# Backup file .env yang tidak sengaja dibuat
+.env.bak
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 9. LOGS
+# ─────────────────────────────────────────────────────────────────────────────
+
+# File log umum dari Flask, Gunicorn, atau library Python lainnya
+*.log
+backend/logs/
+
+# Log spesifik npm dan yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# File PID (Process ID) dari server Node atau Flask yang berjalan sebagai daemon
+pids/
+*.pid
