@@ -547,7 +547,7 @@ class VibePlayApp {
                     <div class="product-title" title="${p.title}">${p.title}</div>
                     <div class="product-meta">
                         ${ratingHtml}
-                        <span style="font-size: 11px;"><i class="fa-solid fa-laptop-code" style="color: var(--secondary);"></i> ${p.platforms.split(',')[0]}</span>
+                        <span style="font-size: 11px;"><i class="fa-solid fa-laptop-code" style="color: var(--secondary);"></i> ${(p.platforms && typeof p.platforms === 'string') ? p.platforms.split(',')[0] : 'PC'}</span>
                     </div>
                     <div class="price-buy-section">
                         ${priceHtml}
@@ -774,7 +774,7 @@ class VibePlayApp {
                             <div class="product-title" title="${p.title}">${p.title}</div>
                             <div class="product-meta">
                                 ${ratingHtml}
-                                <span style="font-size: 11px;"><i class="fa-solid fa-laptop-code" style="color: var(--secondary);"></i> ${p.platforms.split(',')[0]}</span>
+                                <span style="font-size: 11px;"><i class="fa-solid fa-laptop-code" style="color: var(--secondary);"></i> ${(p.platforms && typeof p.platforms === 'string') ? p.platforms.split(',')[0] : 'PC'}</span>
                             </div>
                             <div class="price-buy-section">
                                 ${priceHtml}
