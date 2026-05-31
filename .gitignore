@@ -13,7 +13,6 @@ backend/.env
 
 # Local / Temporary Cache Data
 backend/data/*.bak
-backend/data/progress_temp.csv
 
 # OS specific files
 .DS_Store
