@@ -252,11 +252,13 @@ class VibePlayApp {
     }
 
     renderQuestion() {
-        const totalSteps = this.quizQuestions.length + 1; // +1 step untuk preferensi genre
+        const totalSteps = this.quizQuestions.length + 1; // +1 step untuk preferensi genre (13)
         const stepNum = this.currentQuestionIdx + 1;
-        const progressPct = Math.round(((stepNum - 1) / totalSteps) * 100);
+        const progressPct = Math.round((stepNum / totalSteps) * 100);
 
         document.getElementById('quiz-progress-step').innerText = stepNum;
+        const totalSpan = document.getElementById('quiz-progress-total');
+        if (totalSpan) totalSpan.innerText = totalSteps;
         document.getElementById('quiz-progress-percent').innerText = `${progressPct}%`;
         document.getElementById('quiz-progress-fill').style.width = `${progressPct}%`;
 
@@ -330,11 +332,11 @@ class VibePlayApp {
         } 
         // TAHAP AKHIR: PREFERENSI GENRE
         else {
-            nextBtn.disabled = this.selectedGenres.length === 0;
+            nextBtn.disabled = false; // Opsional, user bisa langsung lanjut tanpa memilih genre
             nextBtn.innerHTML = 'Kirim DNA & Dapatkan Rekomendasi <i class="fa-solid fa-paper-plane"></i>';
             
             const qTitle = document.createElement('h2');
-            qTitle.innerText = 'Pilih beberapa Genre Game yang paling ingin Anda temukan saat ini di Marketplace:';
+            qTitle.innerHTML = 'Pilih beberapa Genre Game yang paling ingin Anda temukan saat ini <span style="font-size: 16px; color: var(--text-muted); font-weight: normal;">(Opsional, Anda bisa langsung klik Kirim)</span>:';
             qBox.appendChild(qTitle);
 
             const genres = ['Action', 'Adventure', 'RPG', 'Strategy', 'Shooter', 'Casual', 'Puzzle', 'Racing', 'Sports', 'Simulation', 'Indie'];
@@ -387,7 +389,7 @@ class VibePlayApp {
         }
         
         const nextBtn = document.getElementById('btn-quiz-next');
-        nextBtn.disabled = this.selectedGenres.length === 0;
+        nextBtn.disabled = false;
     }
 
     nextQuestion() {
