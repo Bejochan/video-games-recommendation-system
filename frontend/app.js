@@ -50,6 +50,15 @@ class VibePlayApp {
         this.showView('landing');
         this.updateSliderLabels();
         this.startHeroCarousel();
+        this.warmUpBackend();
+    }
+
+    warmUpBackend() {
+        // Silently ping the backend to wake it up from sleep (Render free tier)
+        fetch(`${API_URL}/`)
+            .then(res => res.json())
+            .then(data => console.log('Backend warmed up:', data.status))
+            .catch(err => console.log('Warm up ping failed (might be waking up or offline)'));
     }
 
     startHeroCarousel() {

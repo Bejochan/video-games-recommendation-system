@@ -1,0 +1,16 @@
+name: Keep Alive Render Backend
+
+on:
+  schedule:
+    # Jalankan setiap 10 menit (Render free tier tidur setelah 15 menit tidak aktif)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Mengizinkan pemicuan manual dari tab Actions di GitHub
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: |
+          curl -s https://vibeplay-4jk1.onrender.com/
+          echo "Render backend pinged successfully."
