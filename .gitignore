@@ -11,9 +11,6 @@ env/
 .env
 backend/.env
 
-# Local / Temporary Cache Data
-backend/data/*.bak
-
 # OS specific files
 .DS_Store
 Thumbs.db
