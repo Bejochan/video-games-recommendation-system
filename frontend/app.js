@@ -546,10 +546,17 @@ class VibePlayApp {
         }
 
         const data = {
-            labels: ['Casual vs Hardcore', 'Simpel vs Kompleks', 'Calming vs Adrenalin'],
+            labels: ['Hardcore', 'Kompleks', 'Adrenalin', 'Casual', 'Simpel', 'Santai (Calming)'],
             datasets: [{
                 label: 'DNA Karakter Bermain Anda',
-                data: [dna.hardcore * 100, dna.complex * 100, dna.adrenaline * 100],
+                data: [
+                    dna.hardcore * 100,
+                    dna.complex * 100,
+                    dna.adrenaline * 100,
+                    (1.0 - dna.hardcore) * 100,
+                    (1.0 - dna.complex) * 100,
+                    (1.0 - dna.adrenaline) * 100
+                ],
                 backgroundColor: 'rgba(99, 102, 241, 0.2)',
                 borderColor: '#6366f1',
                 borderWidth: 2,
