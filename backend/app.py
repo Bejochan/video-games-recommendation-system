@@ -31,6 +31,7 @@ if os.path.exists(DATA_PATH):
     games_df['genres'] = games_df['genres'].fillna('')
     games_df['platforms'] = games_df['platforms'].fillna('Unknown')
     games_df['background_image'] = games_df['background_image'].fillna('')
+    games_df['released'] = games_df['released'].fillna('')
 else:
     # Fallback kosong jika file tidak ditemukan
     games_df = pd.DataFrame(columns=[
