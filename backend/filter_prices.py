@@ -5,22 +5,28 @@ def is_nsfw(title, slug):
     title_lower = str(title).lower()
     slug_lower = str(slug).lower()
     
-    # Standalone word checks for sensitive keywords to avoid partial matches (e.g. "Section" or "Essex")
-    words = set(title_lower.split() + slug_lower.replace('-', ' ').split())
-    strict_nsfw_words = {
-        'sex', 'porn', 'hentai', 'futanari', 'erotic', 'xxx', 'boobs', 
-        'nudity', 'nude', 'naked', 'milf', 'deepthroat', 'eroge', 'lewd',
-        'ecchi', 'cum', 'orgasm', 'masturbate', 'masturbation', 'penis', 'vagina'
-    }
-    if any(w in strict_nsfw_words for w in words):
-        return True
-        
-    # Substring checks for highly specific phrases
+    # 1. Substring checks for words that are *always* indicators of adult content
+    # (These substrings are highly specific and never appear in mainstream safe games)
     nsfw_substrings = [
-        'pornpack', 'porn-pack', 'sex-game', 'erotic-game', 
-        'hentai-game', 'waifu-sex', 'mom got stuck', 'super deepthroat'
+        'sex', 'hentai', 'lewd', 'adult', 'milf', 'succubus', 'incubus', 
+        'futanari', 'porn', 'eroge', 'bdsm', 'pornpack', 'porn-pack',
+        'sex-game', 'erotic-game', 'hentai-game', 'waifu-sex', 'mom got stuck', 
+        'super deepthroat', 'cybersex', 'sexercise', 'sexbot', 'oversexed'
     ]
     if any(sub in title_lower or sub in slug_lower for sub in nsfw_substrings):
+        return True
+        
+    # 2. Exact word checks for keywords that could be safe as substrings (e.g., "ClusterTruck", "Wanderlust", "illustrations")
+    # but when appearing as standalone words, they indicate adult/NSFW content.
+    words = set(title_lower.split() + slug_lower.replace('-', ' ').split())
+    strict_nsfw_words = {
+        'nude', 'nudity', 'naked', 'boobs', 'xxx', 'cum', 'orgasm', 'masturbate', 
+        'masturbation', 'penis', 'vagina', 'lust', 'lustful', 'lusty', 'erotic', 
+        'erotica', 'seduce', 'seduction', 'harem', 'yuri', 'yaoi', 'rape', 'rapist', 
+        'uncensored', 'playboy', 'taboo', 'incest', 'lesbian', 'shemale', 'transsexual', 
+        'horny', 'pervert', 'virgin', 'fuck', 'fucker', 'fucking', 'strip', 'sensual'
+    }
+    if any(w in strict_nsfw_words for w in words):
         return True
         
     return False

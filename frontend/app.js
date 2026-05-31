@@ -1,5 +1,7 @@
-// Deployed Flask Backend on Render:
-const API_URL = 'https://vibeplay-4jk1.onrender.com';
+// Auto-detect local vs production server:
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:')
+    ? 'http://127.0.0.1:5000'
+    : 'https://vibeplay-4jk1.onrender.com';
 
 class VibePlayApp {
     constructor() {
