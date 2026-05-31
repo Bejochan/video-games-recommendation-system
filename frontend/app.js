@@ -1,7 +1,5 @@
-// Configuration API URL
-const API_BASE_URL = 'http://127.0.5000:5000' || window.location.origin;
-// Wait, local Flask runs on port 5000, let's use:
-const API_URL = 'http://127.0.0.1:5000';
+// Deployed Flask Backend on Render:
+const API_URL = 'https://vibeplay-4jk1.onrender.com';
 
 class VibePlayApp {
     constructor() {
