@@ -589,17 +589,70 @@
 
         /* Radar Chart Card */
         .radar-card {
-            padding: 20px;
+            padding: 24px 30px;
             margin-bottom: 24px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .radar-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .radar-info h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .radar-info p {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .radar-legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .radar-canvas-container {
+            width: 260px;
+            height: 260px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
 
-        .radar-card h4 {
-            font-size: 14px;
-            margin-bottom: 15px;
-            color: var(--text-muted);
+        .radar-canvas-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .radar-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                gap: 20px;
+            }
+            .radar-canvas-container {
+                width: 240px;
+                height: 240px;
+            }
         }
 
         /* Tabs Sessions */
@@ -1179,8 +1232,17 @@
                 <div class="recommendation-sessions">
                     <!-- Visual Radar Chart DNA -->
                     <div class="radar-card glass-panel">
-                        <h4>Visualisasi Playstyle DNA Anda</h4>
-                        <div style="width: 100%; max-width: 320px; height: 320px;">
+                        <div class="radar-info">
+                            <h4><i class="fa-solid fa-dna" style="color: var(--primary);"></i> Playstyle DNA Anda</h4>
+                            <p>
+                                Grafik di samping memetakan karakter bermain unik Anda berdasarkan 12 pertanyaan psikografis. DNA ini bersifat dinamis dan akan menyesuaikan secara real-time saat Anda merubah <strong>Mood</strong> atau <strong>Bobot</strong> di panel kiri.
+                            </p>
+                            <div class="radar-legend">
+                                <div><i class="fa-solid fa-circle" style="color: #6366f1; font-size: 8px; margin-right: 6px;"></i> <strong>Ungu:</strong> DNA Aktif</div>
+                                <div><i class="fa-solid fa-circle" style="color: rgba(255,255,255,0.15); font-size: 8px; margin-right: 6px;"></i> <strong>Garis:</strong> Grid Skala</div>
+                            </div>
+                        </div>
+                        <div class="radar-canvas-container">
                             <canvas id="radarChart"></canvas>
                         </div>
                     </div>
