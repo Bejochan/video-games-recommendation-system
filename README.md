@@ -1,6 +1,10 @@
 # VibePlay - Marketplace & Game Recommendation System
 
-Proyek ini adalah **Sistem Rekomendasi Video Game** berbasis web interaktif bertema **Marketplace Game (Storefront)**. Dibuat menggunakan pendekatan **Hybrid Recommendation System** (Content-Based Filtering + Playstyle DNA) untuk memenuhi tugas mata kuliah Sistem Rekomendasi (Sains Data Terapan) dengan identitas resmi **VibePlay**.
+[![Deploy Frontend](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vibeplay-six.vercel.app/)
+[![Deploy Backend](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://vibeplay-4jk1.onrender.com/)
+[![Tech Stack](https://img.shields.io/badge/Python%20%7C%20Flask%20%7C%20JS-blue?style=for-the-badge&logo=python&logoColor=white)](#)
+
+Proyek ini adalah **Sistem Rekomendasi Video Game** berbasis web interaktif bertema **Marketplace Game (Storefront)**. Dibuat menggunakan pendekatan **Hybrid Recommendation System** (Content-Based Filtering + Playstyle DNA) untuk memenuhi tugas mata kuliah Sistem Rekomendasi (Sains Data Terapan) dengan identitas resmi **VibePlay** .
 
 Aplikasi ini membantu calon pembeli di marketplace menemukan game yang paling cocok berdasarkan:
 1. **Preferensi Genre** eksplisit.
