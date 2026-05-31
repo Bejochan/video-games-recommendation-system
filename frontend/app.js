@@ -49,6 +49,19 @@ class VibePlayApp {
         // Show landing view by default
         this.showView('landing');
         this.updateSliderLabels();
+        this.startHeroCarousel();
+    }
+
+    startHeroCarousel() {
+        const images = document.querySelectorAll('.carousel-image');
+        if (images.length === 0) return;
+        
+        let currentIdx = 0;
+        setInterval(() => {
+            images[currentIdx].classList.remove('active');
+            currentIdx = (currentIdx + 1) % images.length;
+            images[currentIdx].classList.add('active');
+        }, 3000);
     }
 
     showView(viewName) {

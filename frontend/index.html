@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>VibePlay - Marketplace Sistem Rekomendasi Game Cerdas</title>
     <!-- Google Fonts: Inter & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -255,12 +256,47 @@
             align-items: center;
         }
 
-        .hero-visual img {
+        .carousel-container {
+            position: relative;
             width: 100%;
-            max-width: 400px;
+            max-width: 320px;
+            height: 450px;
             border-radius: 20px;
-            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.25));
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-glass);
             animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.25));
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1.05);
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        .carousel-glow {
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            right: -20%;
+            bottom: -20%;
+            background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
         }
 
         @keyframes float {
@@ -1105,7 +1141,14 @@
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=640" alt="VibePlay Gaming Setup Visual">
+                    <div class="carousel-container">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_600x900.jpg" alt="GTA V" class="carousel-image active">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_600x900.jpg" alt="Red Dead Redemption 2" class="carousel-image">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_600x900.jpg" alt="Elden Ring" class="carousel-image">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg" alt="Cyberpunk 2077" class="carousel-image">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/292030/library_600x900.jpg" alt="The Witcher 3" class="carousel-image">
+                        <div class="carousel-glow"></div>
+                    </div>
                 </div>
             </div>
 
