@@ -98,14 +98,46 @@ Buka berkas `frontend/index.html` secara langsung di browser Anda (Klik ganda be
 
 ---
 
-## 📊 Detail Algoritma Rekomendasi (Pertanggungjawaban Akademik)
+## 📊 Landasan Teoretis & Metodologi Sistem Rekomendasi (VibePlay)
 
-Sistem rekomendasi dihitung secara hybrid menggunakan formula:
+Sistem rekomendasi pada **VibePlay** dibangun menggunakan fondasi ilmiah gabungan dari beberapa paradigma rekomendasi modern. Pendekatan **Hybrid Recommendation System** diterapkan untuk menutupi kelemahan masing-masing paradigma tunggal (seperti *Cold Start Problem* atau *Sparsity*) serta menghadirkan personalisasi dinamis yang adaptif.
 
-$$\text{Final Score} = (w_{\text{genre}} \times S_{\text{genre}}) + (w_{\text{dna}} \times S_{\text{dna}}) + (w_{\text{rating}} \times S_{\text{rating}}) + (w_{\text{price}} \times S_{\text{price}})$$
+Berikut adalah penjelasan teoretis dari pilar keilmuan rekomendasi sistem yang diimplementasikan pada proyek ini:
 
-* **$S_{\text{genre}}$ (Genre Score):** Dihitung menggunakan persentase irisan antara list genre game dengan list genre preferensi pengguna.
-* **$S_{\text{dna}}$ (DNA Score):** Dihitung berdasarkan jarak Euclidean di ruang 3D antara vektor DNA pengguna $\vec{U} = (ch_u, sc_u, ca_u)$ dan vektor DNA game $\vec{G} = (ch_g, sc_g, ca_g)$:
-  $$S_{\text{dna}} = 1.0 - \frac{||\vec{G} - \vec{U}||}{\sqrt{3}}$$
-* **$S_{\text{rating}}$ (Rating Score):** Normalisasi nilai gabungan RAWG Rating dan Metacritic Score (60% Metacritic + 40% RAWG).
-* **$S_{\text{price}}$ (Price Score):** Bernilai $1.0$ (ditambah bonus diskon kecil) jika harga game di bawah budget pengguna. Jika melebihi budget, nilai didepresiasi secara linier hingga bernilai $0$ pada batas 2x budget.
+### 1. Hybrid Recommendation System (Sistem Rekomendasi Hibrida)
+VibePlay menggunakan teknik **Weighted Hybrid Recommendation** yang menggabungkan empat kriteria keputusan berbeda secara proporsional. Secara akademis, pendekatan ini memanfaatkan konsep **Multi-Criteria Decision Making (MCDM)** untuk menghasilkan skor kecocokan tunggal terintegrasi:
+
+$$\text{Final Score} = \sum_{i=1}^{n} w_i \times S_i = (w_{\text{genre}} \times S_{\text{genre}}) + (w_{\text{dna}} \times S_{\text{dna}}) + (w_{\text{rating}} \times S_{\text{rating}}) + (w_{\text{price}} \times S_{\text{price}})$$
+
+Di mana parameter bobot ditentukan secara dinamis oleh pengguna melalui *Weighted Sliders* di antarmuka dengan syarat formal:
+$$\sum_{i=1}^{n} w_i = 1.0 \quad \text{dan} \quad w_i \geq 0$$
+
+### 2. Content-Based Filtering (Penyaringan Berbasis Konten)
+Metode ini merekomendasikan item yang serupa dengan preferensi eksplisit yang dinyatakan oleh pengguna. Pada VibePlay, aspek ini direpresentasikan oleh $S_{\text{genre}}$ (Skor Genre):
+* **Representasi Vektor:** Profil preferensi pengguna ($U_g$) dan karakteristik game ($G_g$) dipetakan ke dalam bentuk himpunan kategori genre.
+* **Perhitungan Skor ($S_{\text{genre}}$):** Menggunakan nilai proporsi irisan (Jaccard-like ratio) antara genre yang disukai pengguna dengan genre yang dimiliki game:
+  $$S_{\text{genre}} = \frac{|G_g \cap U_g|}{|U_g|}$$
+  Hal ini memberikan nilai kecocokan linear $1.0$ jika seluruh genre pilihan pengguna terkandung dalam game tersebut.
+
+### 3. Psychographic Profiling & Playstyle DNA (Pemetaan Geometris 3D)
+Alih-alih mengandalkan data demografis yang kaku, VibePlay mengadopsi model **Psikografis (Psychographic Profiling)** untuk memetakan perilaku dan kepribadian bermain pengguna ke dalam **Playstyle DNA**.
+* **Ruang Vektor Metrik:** VibePlay memetakan pengguna ($\vec{U}_{dna}$) dan game ($\vec{G}_{dna}$) sebagai titik koordinat di dalam **Ruang Vektor Metrik 3 Dimensi** $[0.0, 1.0]^3$ yang mewakili tiga dimensi independen gaya bermain:
+  $$\vec{U}_{dna} = (ch_u, sc_u, ca_u) \quad \text{dan} \quad \vec{G}_{dna} = (ch_g, sc_g, ca_g)$$
+  * Dimensi 1 ($ch$): *Casual* vs *Hardcore*
+  * Dimensi 2 ($sc$): *Simple* vs *Complex*
+  * Dimensi 3 ($ca$): *Calming* vs *Adrenaline*
+* **Dynamic Mood Vector Transformation:** Sebelum pencocokan jarak dilakukan, koordinat dasar DNA pengguna ($\vec{U}_{dna\_base}$) ditransformasikan secara dinamis menggunakan **Vektor Pengubah Mood ($\vec{M}$)** yang dipilih secara *real-time*:
+  $$\vec{U}_{dna} = f(\vec{U}_{dna\_base}, \vec{M})$$
+* **Pengukuran Jarak (Euclidean Distance):** Kemiripan gaya bermain dihitung menggunakan **Jarak Euclidean ($L_2$ Norm)** antara titik koordinat pengguna dan game:
+  $$d(\vec{G}_{dna}, \vec{U}_{dna}) = \sqrt{(ch_g - ch_u)^2 + (sc_g - sc_u)^2 + (ca_g - ca_u)^2}$$
+* **Normalisasi Jarak ke Similarity ($S_{\text{dna}}$):** Karena koordinat berada di dalam unit cube 3D, jarak Euclidean maksimum adalah $\sqrt{3} \approx 1.732$. Skor similarity dinormalisasi ke rentang $[0, 1]$ sebagai berikut:
+  $$S_{\text{dna}} = 1.0 - \frac{d(\vec{G}_{dna}, \vec{U}_{dna})}{\sqrt{3}}$$
+  Metode ini memberikan landasan akademis yang sangat kuat karena memodelkan selera bermain sebagai jarak spasial geometris.
+
+### 4. Constraint-Based & Value-Based Filtering (Penyaringan Berbasis Batasan & Nilai)
+Pada platform marketplace, batasan finansial pengguna merupakan *Hard Constraint* (batasan mutlak). Namun, untuk menghindari hilangnya opsi game potensial yang harganya hanya sedikit di atas budget, VibePlay menerapkan **Soft Constraint dengan Penalti Depresiasi Linear**:
+* **Kalkulasi Skor Harga ($S_{\text{price}}$):**
+  * Jika harga game ($P$) lebih kecil atau sama dengan budget maksimal pengguna ($B$), game mendapatkan nilai sempurna dengan tambahan bonus proporsional diskon ($D_{\%}$) sebagai indikator *Value Deal*:
+    $$S_{\text{price}} = \min\left(1.0, \ 0.9 + \left(\frac{D_{\%}}{100} \times 0.1\right)\right) \quad \text{jika } P \leq B$$
+  * Jika harga game ($P$) melebihi budget ($B$), skor didepresiasi secara linier terhadap budget, dan bernilai $0$ jika harga mencapai $2 \times B$:
+    $$S_{\text{price}} = \max\left(0.0, \ 1.0 - \frac{P - B}{B}\right) \quad \text{jika } P > B$$
