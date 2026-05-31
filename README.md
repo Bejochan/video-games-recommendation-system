@@ -168,6 +168,71 @@ $$
 
 Metode ini memberikan landasan akademis yang sangat kuat karena memodelkan selera bermain sebagai jarak spasial geometris.
 
+#### 3.1 Rubrik Penilaian & Metrik Kalkulasi Kuesioner DNA
+
+Untuk mendapatkan koordinat Playstyle DNA pengguna secara kuantitatif, VibePlay mengevaluasi kuesioner psikografis yang terdiri atas 12 pertanyaan situasional yang terbagi menjadi dua tipe soal:
+
+1. **Would You Rather (WYR) — 2 Pilihan Jawaban (Q1 s/d Q3)**: Digunakan untuk menentukan kecenderungan polarisasi tajam pada dimensi tertentu.
+2. **Multiple Choice Question (MCQ) — 4 Pilihan Jawaban (Q4 s/d Q12)**: Digunakan untuk mengukur tingkat gradasi ketertarikan secara lebih halus.
+
+##### A. Tabel Pemetaan Pertanyaan dan Dimensi DNA
+Setiap pertanyaan difokuskan untuk menilai salah satu dari 3 dimensi gaya bermain:
+
+| Kode Soal | Tipe Soal | Dimensi Utama yang Dinilai | Fokus Penilaian Psikografis |
+| :---: | :---: | :---: | :--- |
+| **Q1** | WYR | Hardcore vs Casual | Preferensi durasi sesi bermain di akhir pekan |
+| **Q2** | WYR | Complex vs Simple | Respons terhadap mekanik permainan baru |
+| **Q3** | WYR | Calming vs Adrenaline | Vibe/suasana lingkungan dunia petualangan |
+| **Q4** | MCQ | Hardcore vs Casual | Reaksi psikologis ketika menghadapi kegagalan/rintangan |
+| **Q5** | MCQ | Complex vs Simple | Kompleksitas antarmuka (UI) dan statistik permainan |
+| **Q6** | MCQ | Calming vs Adrenaline | Vibe soundtrack/desain audio latar belakang |
+| **Q7** | MCQ | Hardcore vs Casual | Makna terdalam dari kemenangan/pencapaian (*achievement*) |
+| **Q8** | MCQ | Complex vs Simple | Tingkat persiapan/analisis taktis sebelum melakukan pergerakan |
+| **Q9** | MCQ | Calming vs Adrenaline | Aktivitas rekreasi santai yang dipilih dalam game aksi |
+| **Q10** | MCQ | Calming vs Adrenaline | Tempo, ritme, dan tuntutan kecepatan respon (*gameplay loop*) |
+| **Q11** | MCQ | Complex vs Simple | Sikap terhadap porsi cerita mendalam (*lore* tebal vs aksi langsung) |
+| **Q12** | MCQ | Calming vs Adrenaline | Pilihan perkakas taktis bertahan hidup |
+
+##### B. Rubrik Konversi Jawaban ke Nilai Numerik
+Jawaban kualitatif pengguna dikonversi menjadi skor kuantitatif berskala **1 hingga 5**:
+
+* **Untuk Tipe WYR (2 Pilihan)**:
+  * Pilihan 1 (Casual / Simple / Calming) $\rightarrow$ **Skor 1**
+  * Pilihan 2 (Hardcore / Complex / Adrenaline) $\rightarrow$ **Skor 5**
+* **Untuk Tipe MCQ (4 Pilihan)**:
+  * Pilihan A (Paling Pasif / Casual / Simpel) $\rightarrow$ **Skor 1**
+  * Pilihan B (Menengah Ringan) $\rightarrow$ **Skor 2**
+  * Pilihan C (Menengah Tinggi) $\rightarrow$ **Skor 4**
+  * Pilihan D (Paling Aktif / Hardcore / Kompleks / Adrenalin) $\rightarrow$ **Skor 5**
+
+##### C. Normalisasi & Agregasi Skor DNA
+Untuk menghitung posisi koordinat pengguna di dalam ruang unit kubus $[0.0, 1.0]^3$, setiap jawaban dinormalisasi terlebih dahulu dengan pembagi nilai maksimal (`5.0`):
+
+$$\text{Normalized Score } (S_{Q_i}) = \frac{\text{Skor Pilihan } (1-5)}{5.0}$$
+
+Selanjutnya, koordinat DNA dihitung menggunakan metode **Rata-Rata Aritmatika (Mean Aggregation)** pada setiap kelompok pertanyaan terkait:
+
+1. **Dimensi Hardcore vs Casual ($ch_u$)** dihitung dari rata-rata $Q_1, Q_4, Q_7$:
+   $$ch_u = \frac{S_{Q_1} + S_{Q_4} + S_{Q_7}}{3}$$
+
+2. **Dimensi Complex vs Simple ($sc_u$)** dihitung dari rata-rata $Q_2, S_{Q_5}, S_{Q_8}, S_{Q_{11}}$:
+   $$sc_u = \frac{S_{Q_2} + S_{Q_5} + S_{Q_8} + S_{Q_{11}}}{4}$$
+
+3. **Dimensi Calming vs Adrenaline ($ca_u$)** dihitung dari rata-rata $Q_3, S_{Q_6}, S_{Q_9}, S_{Q_{10}}, S_{Q_{12}}$:
+   $$ca_u = \frac{S_{Q_3} + S_{Q_6} + S_{Q_9} + S_{Q_{10}} + S_{Q_{12}}}{5}$$
+
+##### D. Pemetaan Diagram Radar 6-Axis (Hexagon) di Frontend
+Agar grafik radar di frontend terasa sangat informatif, koordinat 3D yang kontinu diproyeksikan menjadi grafik radar segi enam dengan menampilkan dimensi pelengkap (*complementary axis*):
+
+* **Sisi Dominan (Hardcore, Kompleks, Adrenalin)**:
+  $$\text{Hardcore Score} = ch_u \times 100\%$$
+  $$\text{Complex Score} = sc_u \times 100\%$$
+  $$\text{Adrenaline Score} = ca_u \times 100\%$$
+* **Sisi Resesif (Casual, Simpel, Santai/Calming)**:
+  $$\text{Casual Score} = (1.0 - ch_u) \times 100\%$$
+  $$\text{Simple Score} = (1.0 - sc_u) \times 100\%$$
+  $$\text{Calming Score} = (1.0 - ca_u) \times 100\%$$
+
 ---
 
 ### 4. Constraint-Based & Value-Based Filtering (Penyaringan Berbasis Batasan & Nilai)
