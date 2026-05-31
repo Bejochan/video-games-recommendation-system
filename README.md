@@ -148,7 +148,7 @@ $$
 \vec{U} = (ch_u, sc_u, ca_u) \quad \text{and} \quad \vec{G} = (ch_g, sc_g, ca_g)
 $$
 
-* **Dynamic Mood Vector Transformation:** Sebelum pencocokan jarak dilakukan, koordinat dasar DNA pengguna ($\vec{U}_{\text{base}}$) ditransformasikan secara dinamis menggunakan **Vektor Pengubah Mood ($\vec{M}$)** yang dipilih secara *real-time*:
+* **Dynamic Mood Vector Transformation:** Sebelum pencocokan jarak dilakukan, koordinat dasar DNA pengguna (*U_base*) ditransformasikan secara dinamis menggunakan **Vektor Pengubah Mood (*M*)** yang dipilih secara *real-time*:
 
 $$
 \vec{U} = f(\vec{U}_{\text{base}}, \vec{M})
@@ -173,13 +173,13 @@ Metode ini memberikan landasan akademis yang sangat kuat karena memodelkan seler
 ### 4. Constraint-Based & Value-Based Filtering (Penyaringan Berbasis Batasan & Nilai)
 Pada platform marketplace, batasan finansial pengguna merupakan *Hard Constraint* (batasan mutlak). Namun, untuk menghindari hilangnya opsi game potensial yang harganya hanya sedikit di atas budget, VibePlay menerapkan **Soft Constraint dengan Penalti Depresiasi Linear**:
 * **Kalkulasi Skor Harga (*S_price*):**
-  * Jika harga game (*P*) lebih kecil atau sama dengan budget maksimal pengguna (*B*), game mendapatkan nilai sempurna dengan tambahan bonus proporsional diskon ($D_{\%}$) sebagai indikator *Value Deal*:
+  * Jika harga game (*P*) lebih kecil atau sama dengan budget maksimal pengguna (*B*), game mendapatkan nilai sempurna dengan tambahan bonus proporsional diskon (*D_pct*) sebagai indikator *Value Deal*:
 
 $$
-S_{\text{price}} = \min\left(1.0, \ 0.9 + \left(\frac{D_{\%}}{100} \times 0.1\right)\right) \quad \text{jika } P \leq B
+S_{\text{price}} = \min\left(1.0, \ 0.9 + \left(\frac{D_{\text{pct}}}{100} \times 0.1\right)\right) \quad \text{jika } P \leq B
 $$
 
-  * Jika harga game (*P*) melebihi budget (*B*), skor didepresiasi secara linier terhadap budget, dan bernilai 0 jika harga mencapai $2 \times B$:
+  * Jika harga game (*P*) melebihi budget (*B*), skor didepresiasi secara linier terhadap budget, dan bernilai 0 jika harga mencapai 2 x B:
 
 $$
 S_{\text{price}} = \max\left(0.0, \ 1.0 - \frac{P - B}{B}\right) \quad \text{jika } P > B
