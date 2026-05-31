@@ -46,11 +46,12 @@ Rekomendasi Game/
 │
 ├── backend/
 │   ├── data/
-│   │   ├── games_with_prices.csv      # Dataset utama (15.784 game siap pakai)
-│   │   └── games_with_prices.csv.bak  # Backup dataset
+│   │   ├── games.csv                  # Dataset mentah awal (24.080 game, unfiltered)
+│   │   └── games_with_prices.csv      # Dataset bersih hasil filter (15.784 game siap pakai)
 │   │
 │   ├── app.py                         # API Backend Flask & Algoritma Hybrid Recommendation
 │   ├── fetch_data.py                  # Skrip crawling data RAWG + Steam API (Data Gathering)
+│   ├── filter_prices.py               # Skrip preprocessing / data cleaning (Filter harga)
 │   ├── config.py                      # Konfigurasi server
 │   ├── .env                           # Kunci API lokal (diabaikan oleh git)
 │   └── requirements.txt               # Library python backend
