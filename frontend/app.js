@@ -3,7 +3,7 @@ const API_BASE_URL = 'http://127.0.5000:5000' || window.location.origin;
 // Wait, local Flask runs on port 5000, let's use:
 const API_URL = 'http://127.0.0.1:5000';
 
-class PlayDNAApp {
+class VibePlayApp {
     constructor() {
         this.userId = this.getOrCreateUserId();
         this.currentView = 'landing';
@@ -37,10 +37,10 @@ class PlayDNAApp {
     }
 
     getOrCreateUserId() {
-        let id = localStorage.getItem('playdna_user_id');
+        let id = localStorage.getItem('vibeplay_user_id');
         if (!id) {
             id = 'user_' + Math.random().toString(36).substring(2, 11);
-            localStorage.setItem('playdna_user_id', id);
+            localStorage.setItem('vibeplay_user_id', id);
         }
         return id;
     }
@@ -797,5 +797,5 @@ class PlayDNAApp {
 // Instantiate App
 let app;
 window.addEventListener('DOMContentLoaded', () => {
-    app = new PlayDNAApp();
+    app = new VibePlayApp();
 });

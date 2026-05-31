@@ -1,12 +1,22 @@
-# PlayDNA - Marketplace & Game Recommendation System
+# VibePlay - Marketplace & Game Recommendation System
 
-Proyek ini adalah **Sistem Rekomendasi Video Game** berbasis web interaktif bertema **Marketplace Game (Storefront)**. Dibuat menggunakan pendekatan **Hybrid Recommendation System** (Content-Based Filtering + Playstyle DNA) untuk memenuhi tugas mata kuliah Sistem Rekomendasi (Sains Data Terapan).
+Proyek ini adalah **Sistem Rekomendasi Video Game** berbasis web interaktif bertema **Marketplace Game (Storefront)**. Dibuat menggunakan pendekatan **Hybrid Recommendation System** (Content-Based Filtering + Playstyle DNA) untuk memenuhi tugas mata kuliah Sistem Rekomendasi (Sains Data Terapan) dengan identitas resmi **VibePlay**.
 
 Aplikasi ini membantu calon pembeli di marketplace menemukan game yang paling cocok berdasarkan:
 1. **Preferensi Genre** eksplisit.
 2. **Playstyle DNA** yang didapatkan dari kuesioner psikografis interaktif.
 3. **Mood Bermain** saat ini secara dinamis (*Mood-Adjusted DNA*).
 4. **Marketplace Budget** (Filter Harga & Diskon).
+
+---
+
+## 🏷️ Filosofi Nama & Identitas "VibePlay"
+
+Nama **VibePlay** dipilih sebagai representasi inti dari keunikan inovasi sistem rekomendasi ini:
+* **"Vibe" (Mood/Perasaan):** Mewakili fitur utama *Mood-Adjusted DNA*, di mana sistem tidak hanya merekomendasikan game secara statis, melainkan dinamis mengikuti suasana hati atau *vibe* emosional pengguna saat itu secara *real-time* (seperti *Relaxed, Competitive, Immersive, Focused*).
+* **"Play" (Bermain/Game):** Mewakili ranah objek domain dari sistem rekomendasi ini, yaitu video game.
+
+Dengan demikian, **VibePlay** membawa visi akademis untuk menghadirkan pengalaman belanja di marketplace game yang sangat personal, di mana game yang ditawarkan benar-benar pas dengan *vibe* perasaan dan kapasitas finansial pengguna.
 
 ---
 

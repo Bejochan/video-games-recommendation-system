@@ -130,7 +130,7 @@ def apply_mood_modifier(dna, mood):
 def index():
     return jsonify({
         "status": "online",
-        "message": "Backend Sistem Rekomendasi Game Marketplace berjalan sempurna!",
+        "message": "Backend Sistem Rekomendasi Game VibePlay berjalan sempurna!",
         "total_games": len(games_df)
     })
 
