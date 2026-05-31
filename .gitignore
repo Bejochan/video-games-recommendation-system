@@ -1,98 +1,20 @@
-# ===================================================================
-# .gitignore untuk Proyek Sistem Rekomendasi Video Game
-# Backend: Python + Flask
-# Frontend: React + Vite (Node.js)
-# ===================================================================
-
-# ===============================
-# 1. Python / Backend
-# ===============================
-
-# Virtual environment (jika pakai venv atau conda)
-venv/
-env/
-backend/venv/
-backend/env/
-
-# Bytecode Python otomatis
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
 
-# File konfigurasi environment yang berisi API key dan secret
+# Virtual Environment
+venv/
+env/
+
+# Environment Variables (Berisi API Key RAWG & Steam)
 .env
 backend/.env
 
-# File database lokal (jika ada SQLite)
-*.sqlite3
-backend/*.sqlite3
-backend/instance/
+# Local / Temporary Cache Data
+backend/data/*.bak
+backend/data/progress_temp.csv
 
-# Cache dan log pytest (jika dipakai)
-.pytest_cache/
-backend/.pytest_cache/
-.coverage
-htmlcov/
-coverage.xml
-
-# Folder model ML yang besar
-*.pkl
-*.joblib
-backend/models/
-
-# Folder data besar (CSV, JSON) jika tidak ingin di-track
-backend/data/*.csv
-backend/data/*.json
-
-# ===============================
-# 2. Node.js / Frontend
-# ===============================
-
-# Folder dependencies node_modules
-frontend/node_modules/
-
-# Build output folder
-frontend/dist/
-frontend/build/
-
-# Cache vite dan rollup
-frontend/.cache/
-
-# Laporan coverage frontend (Jest/Vitest)
-frontend/coverage/
-
-# File environment frontend (berisi API URL dan secret)
-frontend/.env
-frontend/.env.local
-frontend/.env.*.local
-
-# ===============================
-# 3. OS, IDE, Editor
-# ===============================
-
-# macOS
+# OS specific files
 .DS_Store
-
-# Windows
 Thumbs.db
-desktop.ini
-
-# VSCode
-.vscode/
-
-# JetBrains IDEs (PyCharm, WebStorm, IntelliJ)
-.idea/
-
-# Vim swap files
-*.swp
-*.swo
-
-# Backup files
-*.orig
-
-# Log files
-*.log
-backend/logs/
-
-# PID files
-*.pid
-pids/
