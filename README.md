@@ -1,6 +1,6 @@
 # VibePlay - Marketplace & Game Recommendation System
 
-[![Deploy Frontend](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vibeplay-six.vercel.app/)
+[![Deploy Frontend](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vibeplay-recommendation-system.vercel.app/)
 [![Deploy Backend](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://vibeplay-4jk1.onrender.com/)
 [![Tech Stack](https://img.shields.io/badge/Python%20%7C%20Flask%20%7C%20JS-blue?style=for-the-badge&logo=python&logoColor=white)](#)
 
