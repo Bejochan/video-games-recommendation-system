@@ -254,54 +254,98 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px 0;
         }
 
-        .carousel-container {
+        .cards-deck {
             position: relative;
-            width: 100%;
-            max-width: 320px;
-            height: 450px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-glass);
-            animation: float 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.25));
+            width: 320px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
 
-        .carousel-image {
+        .deck-card {
             position: absolute;
-            top: 0;
-            left: 0;
+            width: 150px;
+            height: 225px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, filter 0.4s ease;
+        }
+
+        .deck-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0;
-            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: scale(1.05);
+            display: block;
+            transition: opacity 0.5s ease;
         }
 
-        .carousel-image.active {
-            opacity: 1;
-            transform: scale(1);
+        .deck-card.fade-out img {
+            opacity: 0;
+        }
+
+        .card-left {
+            transform: translateX(-40px) translateY(8px) rotate(-10deg);
+            z-index: 1;
+            filter: brightness(0.6);
+        }
+
+        .card-right {
+            transform: translateX(40px) translateY(8px) rotate(10deg);
+            z-index: 2;
+            filter: brightness(0.6);
+        }
+
+        .card-center {
+            transform: translateY(-8px) rotate(0deg);
+            z-index: 3;
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .cards-deck:hover .card-left {
+            transform: translateX(-80px) translateY(0px) rotate(-18deg) scale(1.03);
+            filter: brightness(0.9);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
             z-index: 2;
         }
 
-        .carousel-glow {
+        .cards-deck:hover .card-right {
+            transform: translateX(80px) translateY(0px) rotate(18deg) scale(1.03);
+            filter: brightness(0.9);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .cards-deck:hover .card-center {
+            transform: translateY(-20px) scale(1.08);
+            box-shadow: 0 25px 45px rgba(99, 102, 241, 0.45);
+            border-color: rgba(99, 102, 241, 0.6);
+            z-index: 4;
+        }
+
+        .deck-glow {
             position: absolute;
-            top: -20%;
-            left: -20%;
-            right: -20%;
-            bottom: -20%;
+            top: 10%;
+            left: 10%;
+            right: 10%;
+            bottom: 10%;
             background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 70%);
-            z-index: 1;
+            z-index: 0;
             pointer-events: none;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(1deg); }
+            50% { transform: translateY(-12px) rotate(1deg); }
         }
 
         /* Features Section */
@@ -1141,13 +1185,17 @@
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="carousel-container">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_600x900.jpg" alt="GTA V" class="carousel-image active">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_600x900.jpg" alt="Red Dead Redemption 2" class="carousel-image">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_600x900.jpg" alt="Elden Ring" class="carousel-image">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg" alt="Cyberpunk 2077" class="carousel-image">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/292030/library_600x900.jpg" alt="The Witcher 3" class="carousel-image">
-                        <div class="carousel-glow"></div>
+                    <div class="cards-deck">
+                        <div class="deck-card card-left">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/367520/library_600x900.jpg" alt="Hollow Knight">
+                        </div>
+                        <div class="deck-card card-right">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/588650/library_600x900.jpg" alt="Dead Cells">
+                        </div>
+                        <div class="deck-card card-center">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/library_600x900.jpg" alt="Hades">
+                        </div>
+                        <div class="deck-glow"></div>
                     </div>
                 </div>
             </div>

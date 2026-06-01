@@ -32,6 +32,23 @@ class VibePlayApp {
         // Chart Instance
         this.radarChart = null;
         
+        // 12 Premium Indie Game Posters
+        this.indiePosters = [
+            { title: "Hollow Knight", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/library_600x900.jpg" },
+            { title: "Dead Cells", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/588650/library_600x900.jpg" },
+            { title: "Hades", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/library_600x900.jpg" },
+            { title: "Stardew Valley", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/library_600x900.jpg" },
+            { title: "Celeste", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/504230/library_600x900.jpg" },
+            { title: "Cuphead", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/268910/library_600x900.jpg" },
+            { title: "Ori and the Will of the Wisps", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/1057090/library_600x900.jpg" },
+            { title: "Terraria", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/library_600x900.jpg" },
+            { title: "Slay the Spire", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/646570/library_600x900.jpg" },
+            { title: "Katana Zero", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/460950/library_600x900.jpg" },
+            { title: "Outer Wilds", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/753640/library_600x900.jpg" },
+            { title: "Untitled Goose Game", url: "https://cdn.cloudflare.steamstatic.com/steam/apps/837470/library_600x900.jpg" }
+        ];
+        this.currentIndieIdx = 3; // Index 0, 1, 2 are rendered initially
+        
         // Initialize
         this.init();
     }
@@ -49,7 +66,7 @@ class VibePlayApp {
         // Show landing view by default
         this.showView('landing');
         this.updateSliderLabels();
-        this.startHeroCarousel();
+        this.startIndieDeckRotation();
         this.warmUpBackend();
     }
 
@@ -61,16 +78,50 @@ class VibePlayApp {
             .catch(err => console.log('Warm up ping failed (might be waking up or offline)'));
     }
 
-    startHeroCarousel() {
-        const images = document.querySelectorAll('.carousel-image');
-        if (images.length === 0) return;
+    startIndieDeckRotation() {
+        const leftCard = document.querySelector('.card-left');
+        const centerCard = document.querySelector('.card-center');
+        const rightCard = document.querySelector('.card-right');
         
-        let currentIdx = 0;
+        if (!leftCard || !centerCard || !rightCard) return;
+
+        const swapCard = (cardElement, posterObj) => {
+            cardElement.classList.add('fade-out');
+            setTimeout(() => {
+                const img = cardElement.querySelector('img');
+                if (img) {
+                    img.src = posterObj.url;
+                    img.alt = posterObj.title;
+                }
+                cardElement.classList.remove('fade-out');
+            }, 500);
+        };
+
+        // Setiap 8 detik, picu pertukaran bertahap (staggered) dari kiri -> tengah -> kanan
         setInterval(() => {
-            images[currentIdx].classList.remove('active');
-            currentIdx = (currentIdx + 1) % images.length;
-            images[currentIdx].classList.add('active');
-        }, 3000);
+            const nextLeft = this.indiePosters[this.currentIndieIdx];
+            this.currentIndieIdx = (this.currentIndieIdx + 1) % this.indiePosters.length;
+            
+            const nextCenter = this.indiePosters[this.currentIndieIdx];
+            this.currentIndieIdx = (this.currentIndieIdx + 1) % this.indiePosters.length;
+            
+            const nextRight = this.indiePosters[this.currentIndieIdx];
+            this.currentIndieIdx = (this.currentIndieIdx + 1) % this.indiePosters.length;
+
+            // 1. Kartu Kiri bertukar langsung
+            swapCard(leftCard, nextLeft);
+
+            // 2. Kartu Tengah bertukar setelah 1.2 detik
+            setTimeout(() => {
+                swapCard(centerCard, nextCenter);
+            }, 1200);
+
+            // 3. Kartu Kanan bertukar setelah 2.4 detik
+            setTimeout(() => {
+                swapCard(rightCard, nextRight);
+            }, 2400);
+
+        }, 8000);
     }
 
     showView(viewName) {
