@@ -11,7 +11,8 @@ def is_nsfw(title, slug):
         'sex', 'hentai', 'lewd', 'adult', 'milf', 'succubus', 'incubus', 
         'futanari', 'porn', 'eroge', 'bdsm', 'pornpack', 'porn-pack',
         'sex-game', 'erotic-game', 'hentai-game', 'waifu-sex', 'mom got stuck', 
-        'super deepthroat', 'cybersex', 'sexercise', 'sexbot', 'oversexed'
+        'super deepthroat', 'cybersex', 'sexercise', 'sexbot', 'oversexed',
+        'waifu', 'neko'
     ]
     if any(sub in title_lower or sub in slug_lower for sub in nsfw_substrings):
         return True
