@@ -12,5 +12,6 @@ jobs:
     steps:
       - name: Ping Render Backend
         run: |
-          curl -s https://vibeplay-4jk1.onrender.com/
+          curl -s https://vibeplay-4jk1.onrender.com/health
           echo "Render backend pinged successfully."
+

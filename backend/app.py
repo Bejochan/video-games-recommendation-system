@@ -135,6 +135,11 @@ def index():
         "total_games": len(games_df)
     })
 
+@app.route('/health')
+def health():
+    return "OK", 200
+
+
 # API Endpoint untuk menyimpan jawaban kuisioner dan menghitung DNA
 @app.route('/api/quiz', methods=['POST'])
 def save_quiz():
