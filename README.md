@@ -5,9 +5,8 @@
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-3776AB?style=for-the-badge&logo=python&logoColor=white)](#)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](#)
 [![Flask REST API](https://img.shields.io/badge/Flask-REST_API-000000?style=for-the-badge&logo=flask&logoColor=white)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](#)
 
-VibePlay is an interactive web-based **Video Game Recommendation System & Storefront Marketplace**. Developed using a **Hybrid Recommendation Approach** (Content-Based Filtering + 3D Psychographic Playstyle DNA), VibePlay was engineered to fulfill the requirements of the Recommender Systems curriculum in Applied Data Science at Politeknik Elektronika Negeri Surabaya (PENS).
+VibePlay is an interactive web-based **Video Game Recommendation System & Storefront Marketplace**. Developed using a **Hybrid Recommendation Architecture** combining Content-Based Filtering with 3D Psychographic Playstyle DNA, VibePlay delivers personalized game discovery based on player disposition, real-time mood shifts, and live Steam storefront pricing.
 
 The system assists prospective buyers in finding optimal gaming titles tailored to:
 1. **Explicit Genre Preferences**: Multi-select categorical genre filtering.
@@ -185,10 +184,10 @@ VibePlay implements a **Hybrid Recommendation System** combining:
 * Quality Indicators (Metacritic & RAWG user ratings)
 * Economic Constraints (localized Indonesian Rupiah budget limits)
 
-The composite recommendation score $S_{	ext{total}}$ is computed as:
+The composite recommendation score $S_{\text{total}}$ is computed as:
 
 $$
-S_{	ext{total}} = w_g \cdot S_{	ext{genre}} + w_d \cdot S_{	ext{dna}} + w_r \cdot S_{	ext{rating}} + w_p \cdot S_{	ext{price}}
+S_{\text{total}} = w_g \cdot S_{\text{genre}} + w_d \cdot S_{\text{dna}} + w_r \cdot S_{\text{rating}} + w_p \cdot S_{\text{price}}
 $$
 
 Where $\sum w_i = 1.0$, dynamically calibrated via the UI aspect sliders.
@@ -198,10 +197,10 @@ Where $\sum w_i = 1.0$, dynamically calibrated via the UI aspect sliders.
 ### 2. Content-Based Filtering & Jaccard Genre Similarity
 
 * **Vector Representation:** User preferences ($U_g$) and game tags ($G_g$) are modeled as discrete genre sets.
-* **Score Formulation ($S_{	ext{genre}}$):** Evaluated using the intersection ratio over user-selected genres:
+* **Score Formulation ($S_{\text{genre}}$):** Evaluated using the intersection ratio over user-selected genres:
 
 $$
-S_{	ext{genre}} = rac{|G_g \cap U_g|}{|U_g|}
+S_{\text{genre}} = \frac{|G_g \cap U_g|}{|U_g|}
 $$
 
 This ensures a perfect score of $1.0$ when all genres requested by the user are present in the candidate title.
@@ -215,28 +214,28 @@ Rather than relying on rigid demographic labels, VibePlay models gaming temperam
 * Dimension 2 ($sc$): *Simple* $\longleftrightarrow$ *Complex*
 * Dimension 3 ($ca$): *Calming* $\longleftrightarrow$ *Adrenaline*
 
-Coordinate vectors for user ($ec{U}$) and game ($ec{G}$) are defined as:
+Coordinate vectors for user ($\vec{U}$) and game ($\vec{G}$) are defined as:
 
 $$
-ec{U} = (ch_u, sc_u, ca_u) \quad 	ext{and} \quad ec{G} = (ch_g, sc_g, ca_g)
+\vec{U} = (ch_u, sc_u, ca_u) \quad \text{and} \quad \vec{G} = (ch_g, sc_g, ca_g)
 $$
 
-* **Dynamic Mood Vector Transformation:** Before distance calculation, baseline user coordinates ($ec{U}_{	ext{base}}$) are modulated by a real-time mood operator ($ec{M}$):
+* **Dynamic Mood Vector Transformation:** Before distance calculation, baseline user coordinates ($\vec{U}_{\text{base}}$) are modulated by a real-time mood operator ($\vec{M}$):
 
 $$
-ec{U} = f(ec{U}_{	ext{base}}, ec{M})
+\vec{U} = f(\vec{U}_{\text{base}}, \vec{M})
 $$
 
 * **Euclidean Distance ($L_2$ Norm):** Playstyle proximity is computed as the Euclidean distance between user and game coordinates:
 
 $$
-d(ec{G}, ec{U}) = \sqrt{(ch_g - ch_u)^2 + (sc_g - sc_u)^2 + (ca_g - ca_u)^2}
+d(\vec{G}, \vec{U}) = \sqrt{(ch_g - ch_u)^2 + (sc_g - sc_u)^2 + (ca_g - ca_u)^2}
 $$
 
-* **Similarity Normalization ($S_{	ext{dna}}$):** Within the 3D unit cube, maximum possible distance is $\sqrt{3} pprox 1.732$. Proximity is normalized into $[0, 1]$:
+* **Similarity Normalization ($S_{\text{dna}}$):** Within the 3D unit cube, maximum possible distance is $\sqrt{3} \approx 1.732$. Proximity is normalized into $[0, 1]$:
 
 $$
-S_{	ext{dna}} = 1.0 - rac{d(ec{G}, ec{U})}{\sqrt{3}}
+S_{\text{dna}} = 1.0 - \frac{d(\vec{G}, \vec{U})}{\sqrt{3}}
 $$
 
 ---
@@ -278,30 +277,50 @@ Responses are mapped onto a **1 to 5 scale**:
 ##### C. DNA Normalization & Arithmetic Aggregation
 Individual scores are normalized against maximum value (`5.0`):
 
-$$S_{Q_i} = rac{	ext{Choice Score }(1-5)}{5.0}$$
+$$
+S_{Q_i} = \frac{\text{Choice Score }(1-5)}{5.0}
+$$
 
 Aggregated coordinates are computed via arithmetic mean across mapped question clusters:
 
 1. **Hardcore vs Casual ($ch_u$):**
-   $$ch_u = rac{S_{Q_1} + S_{Q_4} + S_{Q_7}}{3}$$
+   $$
+   ch_u = \frac{S_{Q_1} + S_{Q_4} + S_{Q_7}}{3}
+   $$
 
 2. **Complex vs Simple ($sc_u$):**
-   $$sc_u = rac{S_{Q_2} + S_{Q_5} + S_{Q_8} + S_{Q_{11}}}{4}$$
+   $$
+   sc_u = \frac{S_{Q_2} + S_{Q_5} + S_{Q_8} + S_{Q_{11}}}{4}
+   $$
 
 3. **Calming vs Adrenaline ($ca_u$):**
-   $$ca_u = rac{S_{Q_3} + S_{Q_6} + S_{Q_9} + S_{Q_{10}} + S_{Q_{12}}}{5}$$
+   $$
+   ca_u = \frac{S_{Q_3} + S_{Q_6} + S_{Q_9} + S_{Q_{10}} + S_{Q_{12}}}{5}
+   $$
 
 ##### D. 6-Axis Hexagonal Polygon Radar Chart Mapping
 In the web interface, the continuous 3D coordinate vector is projected onto a 6-axis polygon displaying both dominant and complementary recessive traits:
 
 * **Dominant Traits:**
-  $$	ext{Hardcore Score} = ch_u 	imes 100\%$$
-  $$	ext{Complex Score} = sc_u 	imes 100\%$$
-  $$	ext{Adrenaline Score} = ca_u 	imes 100\%$$
+  $$
+  \text{Hardcore Score} = ch_u \times 100\%
+  $$
+  $$
+  \text{Complex Score} = sc_u \times 100\%
+  $$
+  $$
+  \text{Adrenaline Score} = ca_u \times 100\%
+  $$
 * **Recessive Complementary Traits:**
-  $$	ext{Casual Score} = (1.0 - ch_u) 	imes 100\%$$
-  $$	ext{Simple Score} = (1.0 - sc_u) 	imes 100\%$$
-  $$	ext{Calming Score} = (1.0 - ca_u) 	imes 100\%$$
+  $$
+  \text{Casual Score} = (1.0 - ch_u) \times 100\%
+  $$
+  $$
+  \text{Simple Score} = (1.0 - sc_u) \times 100\%
+  $$
+  $$
+  \text{Calming Score} = (1.0 - ca_u) \times 100\%
+  $$
 
 ---
 
@@ -309,21 +328,21 @@ In the web interface, the continuous 3D coordinate vector is projected onto a 6-
 
 On e-commerce storefronts, pricing represents a *Hard Constraint*. However, to prevent dropping titles priced marginally above the threshold, VibePlay implements a **Soft Constraint with Linear Depreciation Penalty**:
 
-* If price ($P$) $\le$ maximum budget ($B$), the game receives a full score plus a proportional discount bonus ($D_{	ext{pct}}$):
+* If price ($P$) $\le$ maximum budget ($B$), the game receives a full score plus a proportional discount bonus ($D_{\text{pct}}$):
 
 $$
-S_{	ext{price}} = \min\left(1.0, \ 0.9 + \left(rac{D_{	ext{pct}}}{100} 	imes 0.1ight)ight) \quad 	ext{for } P \le B
+S_{\text{price}} = \min\left(1.0, \ 0.9 + \left(\frac{D_{\text{pct}}}{100} \times 0.1\right)\right) \quad \text{for } P \le B
 $$
 
-* If price ($P$) exceeds budget ($B$), score linearly depreciates to $0.0$ when price reaches $2 	imes B$:
+* If price ($P$) exceeds budget ($B$), score linearly depreciates to $0.0$ when price reaches $2 \times B$:
 
 $$
-S_{	ext{price}} = \max\left(0.0, \ 1.0 - rac{P - B}{B}ight) \quad 	ext{for } P > B
+S_{\text{price}} = \max\left(0.0, \ 1.0 - \frac{P - B}{B}\right) \quad \text{for } P > B
 $$
 
 ---
 
-## 📜 License & Attributions
+## 📜 Attributions & Data Sources
 
 * **Video Game Metadata Corpus:** [RAWG Video Games Database API](https://rawg.io/apidocs)
 * **Market Pricing & Storefront Verification:** [Steam Web API & Storefront](https://store.steampowered.com/)
